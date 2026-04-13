@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title>自习室预约系统</title>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+
+  <!-- TWT Chat 客服集成 -->
+  <script>
+    window.__twt__config={
+        appid:"7ef1c7e6b742450fe733d7d628001b1a",
+        lang:"zh-cn",
+        theme:"light",
+        sbs:"",
+        sbs_mm:"",
+        ranstr:"",
+        name:"",
+        nickname:"",
+        email:"",
+        phone:"",
+        icon:"1"
+    };
+    (function(n,t){
+        var e={
+            init:function(){
+                var n=t.createElement("script");
+                n.async=!0;
+                n.type="text/javascript";
+                n.src="https://visitorchat.twt.com/install/core.js?version=v1.2";
+                t.head.appendChild(n)
+            }
+        };
+        e.init()
+    })(window,document);
+  </script>
+
+  <!-- 左下角客服按钮 -->
+  <style>
+    .twt-chat-button {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+      border-radius: 50%;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+      z-index: 998;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .twt-chat-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+    }
+  </style>
+
+  <button class="twt-chat-button" id="twtChatBtn" title="联系客服">💬</button>
+
+  <script>
+    // 检测是否为管理员页面
+    function isAdminPage() {
+      return window.location.pathname.includes('/Admin');
+    }
+
+    // 控制客服图标的显示/隐藏
+    function controlCustomerServiceIcons() {
+      const isAdmin = isAdminPage();
+      console.log('Is admin page:', isAdmin);
+      
+      // 隐藏TWT Chat按钮
+      const twtChatBtn = document.getElementById('twtChatBtn');
+      if (twtChatBtn) {
+        twtChatBtn.style.display = isAdmin ? 'none' : 'flex';
+        console.log('TWT Chat button display:', twtChatBtn.style.display);
+      }
+
+      // 隐藏美洽客服图标
+      if (isAdmin) {
+        // 尝试多种选择器查找美洽图标
+        const selectors = ['.mq-icon', '.mqbtn', '#meiqia-container', '.meiqia-chat-button'];
+        selectors.forEach(selector => {
+          const elements = document.querySelectorAll(selector);
+          elements.forEach(element => {
+            element.style.display = 'none';
+            console.log('Hidden element with selector:', selector);
+          });
+        });
+
+        // 延迟执行，确保美洽图标已加载
+        setTimeout(() => {
+          selectors.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(element => {
+              element.style.display = 'none';
+              console.log('Delayed hidden element with selector:', selector);
+            });
+          });
+        }, 1000);
+
+        // 额外检查右下角的客服图标
+        setTimeout(() => {
+          const rightBottomElements = document.querySelectorAll('[style*="bottom"][style*="right"]');
+          rightBottomElements.forEach(element => {
+            if (element.classList.contains('mq-icon') || element.classList.contains('twt-chat-button')) {
+              element.style.display = 'none';
+              console.log('Hidden right bottom element:', element.className);
+            }
+          });
+        }, 2000);
+      }
+    }
+
+    // 页面加载完成后执行
+    window.addEventListener('load', function() {
+      controlCustomerServiceIcons();
+      
+      // 定期检查，确保图标被隐藏
+      setInterval(controlCustomerServiceIcons, 3000);
+    });
+
+    // 监听路由变化
+    window.addEventListener('popstate', controlCustomerServiceIcons);
+
+    // 监听hash变化（Vue路由）
+    window.addEventListener('hashchange', controlCustomerServiceIcons);
+
+    document.getElementById('twtChatBtn').addEventListener('click', function() {
+      if (window.__twt__api && window.__twt__api.open) {
+        window.__twt__api.open();
+      } else {
+        alert('客服系统加载中，请稍候...');
+      }
+    });
+  </script>
+
+  <script src=https://app.qiaoqiaoyun.com/chat/chat.js id="e7e007dd52f67fe36365eff636bbffbd"></script>
+</html>
+<script src="http://43.139.58.31:8081/Credential/DC1FA541F91E452B979BF8EC88DD954A/d5c0e257-b9af-40c2-919b-5d41368c4eb1.js"></script>
