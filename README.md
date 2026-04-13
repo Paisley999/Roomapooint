@@ -1,4 +1,4 @@
-# vue2
+# Roomapooint
 
 ## Project setup
 ```
